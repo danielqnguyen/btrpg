@@ -1,0 +1,54 @@
+{
+  "Warrior": {
+    "class": "Warrior",
+    "stats": {
+      "str": 10,
+      "agi": 5,
+      "hp": 50,
+      "def": 5,
+      "luk": 5
+    },
+    "description": "A retired adventurer who has to pick up his sword once again to avenge his family by defeating the demon lord.",
+    "image": "warrior.png"
+  },
+  "Theif": {
+    "class": "Theif",
+    "stats": {
+      "str": 5,
+      "agi": 10,
+      "hp": 40,
+      "def": 5,
+      "luk": 7
+    },
+    "description": "An orphan who only knew how to steal growing up, uses his skills steal whatever he wants even killing.",
+    "image": "theif.png"
+  },
+  "Monster": {
+    "mobs": [
+      {
+        "name": "Slime",
+        "loot ": ["weapon", "armor", "potion", "slime balls"],
+        "stats": {
+          "str": 4,
+          "agi": 4,
+          "hp": 50,
+          "def": 4,
+          "luk": 0,
+          "image": "slime.jpg"
+        }
+      },
+      {
+        "name": "Skeleton",
+        "loot ": ["weapon", "armor", "potion", "bones"],
+        "stats": {
+          "str": 7,
+          "agi": 3,
+          "hp": 55,
+          "def": 6,
+          "luk": 0,
+          "image": "skeleton.jpg"
+        }
+      }
+    ]
+  }
+}
