@@ -1,29 +1,29 @@
 {
-  "Warrior": {
+  "warrior": {
     "class": "Warrior",
     "stats": {
       "str": 10,
       "agi": 5,
       "hp": 50,
-      "def": 5,
+      "def": 7,
       "luk": 5
     },
     "description": "A retired adventurer who has to pick up his sword once again to avenge his family by defeating the demon lord.",
     "image": "warrior.png"
   },
-  "Theif": {
+  "theif": {
     "class": "Theif",
     "stats": {
       "str": 5,
       "agi": 10,
-      "hp": 40,
+      "hp": 50,
       "def": 5,
       "luk": 7
     },
-    "description": "An orphan who only knew how to steal growing up, uses his skills steal whatever he wants even killing.",
+    "description": "A proud theif who likes a challenge, his next challenge acquiring the demon lord's treasure.",
     "image": "theif.png"
   },
-  "Monster": {
+  "monster": {
     "mobs": [
       {
         "name": "Slime",
