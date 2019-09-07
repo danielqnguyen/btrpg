@@ -2,6 +2,7 @@
   "warrior": {
     "class": "Warrior",
     "stats": {
+      "level": 1,
       "str": 10,
       "agi": 5,
       "hp": 50,
@@ -14,6 +15,7 @@
   "theif": {
     "class": "Theif",
     "stats": {
+      "level": 1,
       "str": 5,
       "agi": 10,
       "hp": 50,
@@ -29,6 +31,7 @@
         "name": "Slime",
         "loot ": ["weapon", "armor", "potion", "slime balls"],
         "stats": {
+          "level": 1,
           "str": 4,
           "agi": 4,
           "hp": 50,
@@ -41,6 +44,7 @@
         "name": "Skeleton",
         "loot ": ["weapon", "armor", "potion", "bones"],
         "stats": {
+          "level": 1,
           "str": 7,
           "agi": 3,
           "hp": 55,
