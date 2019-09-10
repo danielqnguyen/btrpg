@@ -11,6 +11,9 @@ theif's damage roll may have a chance to hit twice(not final, but more likely to
 Luk(rare) stat (currently) cannot be increased wihtout equipment, either increases item drops
 or crit rate
 */
+//on confirmation click of job selection will store the class's information into redux
+//will add exp
+//maybe convert str/agi into a dmg stat 
 
 // Options Page
 /*
@@ -18,12 +21,38 @@ or crit rate
 2/10 to encouter nothing, 1/10 times to randomly obtain item/money, 1/10 of being robbed
 -Rest Button: self explanatory, will recover 10% of hp/mp(if skills/magic are incorporated)
 1/10 chance to meet npc/merchant
--Status: checks current status and equipped items
--Inventory: Will show all the loot obtained and gold
+-Status: checks current status and equipped items, info stored in redux
+-Inventory: Will show all the loot obtained and gold, info store in redux
 -DataBook: not sure if this will be used but will most likely contain monster info/loot
 and other miscellaneous info
--Each button instead of sending to a new page will just display a modal
+-Each button will display a modal
 */
+//explore button
+explore(){
+let rng = this.diceRoll()
+  if (rng == 10){
+    this.getRobbed()
+  } else if (rng == 9){
+    this.randomItem()
+  } else if (rng == 8 || rng == 7){
+    null
+  } else if (rng == 6){
+    this.merchantAppear()
+  } else {
+    this.mobEncounter()
+  }
+}
+
+diceRoll(){
+  let rng = Math.floor(Math.random() * 10) + 1
+}
+
+mobEncounter(){
+  let mob = []
+  //need to make a seperate mob character sheet and randomly select it
+  let mLvl = char.Level + (Math.floor(Math.random() * 5) + 1)
+  let def = asdasd
+}
 
 //Battle Screen
 /*
@@ -41,6 +70,35 @@ successful feeling
 -Potions/Items: Potions will recover 10-25% of hp, potential chance of adding in other
 items to help will battling
  */
+//dmg dice
+//need to work on dmg logic
+dmgDice(){
+  let roll = this.diceRoll()
+  if(roll == Math.floor(Math.random() * 10) + 1){
+    "miss"
+  } else {
+    "Hit"
+  }
+}
+
+dgeDice(){
+  let roll = this.diceRoll()
+  if(roll == Math.floor(Math.random() * 10) + 1){
+    "dodged"
+  } else {
+    "Hit"
+  }
+}
+
+fleeDice(){
+  let roll = this.diceRoll()
+  if(roll == 1 || roll == 3 || roll == 5 || roll == 7|| roll ==9 ){
+    "Flee successful"
+  } else {
+    "Flee Failed"
+  }
+}
+
 
 //Post Battle
 /* 
@@ -56,6 +114,59 @@ can also sell items
 maybe add merchant level where a rare/powerful weapon will have a low chance of appearing
 */
 
+//merchant appears
+merchantAppear(){
+let inventory = []
+let potions = this.getPotion()
+let armor = this.getArmor()
+let weapon = this.getWeapon()
+inventory.push(potions, armor, weapon)
+}
+
+//potion get
+//need to think/work out how potions work
+getPotion(){
+let potion = []
+let heal = 50
+}
+//weaponStat
+getWeapon(){
+let weapon =[]
+let iLvl = this.rarity()
+let str = (itemStat(iLvl) * level)
+let dex = itemStat(iLvl) * level
+weapon.push(iLvl, str, dex)
+}
+//armorStat
+//need to work on the equation for armor/ how def will take into consideration when fighting
+getArmor(){
+
+}
+
+//random rarity
+rarity(){
+  let rarityOptions = ['Common', 'Rare', 'Epic', 'Legendary']
+  let randomRarity = rarityOptions[Math.floor(math.random() * rarityOptions.length)]
+  return randomRarity;
+}
+
+itemStat(rarity){
+  if (rarity == 'Common'){
+    return 4
+  } else if (rarity == 'Rare'){
+    return 5.5
+  } else if (rarity == 'Epic'){
+    return 7
+  } else if (rarity == 'Legendary'){
+    return 10
+  }
+}
+
+//item selling??
+
+
+
+
 //Equiment/items
 /* 
 For now this logic will only apply to equiment as the only other items that can be acquired
@@ -69,3 +180,64 @@ Rates may change
 stats will currently be randomly rolled and then afterwards the rarity will affect the item
 Luk will a small chance of appearing on epic/legendary gear
 */
+weaponRarity(){
+let rarity = Math.floor(Math.random()*100)
+if (rarity >= 0 && rarity <= 65){
+  //common
+  let weapon = [];
+  if(job == warrior){
+    let iLvl = "common"
+  let str = 4 * level
+  let dex = Math.floor(1.5 * level)
+  weapon.push(iLvl, str, dex)
+  } else {
+    let iLvl = "common"
+    let str =  Math.floor(1.5 * level)
+    let dex = 4 * level 
+    weapon.push(iLvl, str, dex)
+  }
+} else if (rarity >= 66 && rarity <= 85){
+  //rare
+  let weapon = [];
+  if(job == warrior){
+    let iLvl = "Rare"
+  let str = 5.5 * level
+  let dex = Math.floor(2.5 * level)
+  weapon.push(iLvl, str, dex)
+  } else {
+    let iLvl = "Rare"
+    let str =  Math.floor(2.5 * level)
+    let dex = 5.5 * level 
+    weapon.push(iLvl, str, dex)
+  }
+}else if (rarity >= 86 && rarity <= 94){
+  //epic
+  let weapon = [];
+  if(job == warrior){
+    let iLvl = "Epic"
+  let str = 7 * level
+  let dex = Math.floor(4 * level)
+  weapon.push(iLvl, str, dex)
+  } else {
+    let iLvl = "Epic"
+    let str =  Math.floor(4 * level)
+    let dex = 7 * level 
+    weapon.push(iLvl, str, dex)
+  }
+} else if (rarity >= 95){
+  //legendary
+  let weapon = [];
+  if(job == warrior){
+    let iLvl = "Legendary"
+  let str = 10 * level
+  let dex = Math.floor(6 * level)
+  let luk = Math.ceil(Math.random()*10)
+  weapon.push(iLvl, str, dex, luk)
+  } else {
+    let iLvl = "Legendary"
+    let str =  Math.floor(6 * level)
+    let dex = 10 * level
+    let luk = Math.ceil(Math.random()*10)
+    weapon.push(iLvl, str, dex, luk)
+  }
+}
