@@ -44,14 +44,49 @@ let rng = this.diceRoll()
 }
 
 diceRoll(){
-  let rng = Math.floor(Math.random() * 10) + 1
+  return rng = Math.floor(Math.random() * 10) + 1
 }
 
 mobEncounter(){
+  //create a counter enemies defeated once it hits 10 the mob will be a boss rather than a regular mob
+if(mobEncouter !== 10){
   let mob = []
+  let mobList = mobDataSheet
   //need to make a seperate mob character sheet and randomly select it
+  let mSpecies = mobList[Math.floor(math.random() * mobList.length)]
+  let rng = Math.floor(Math.random() * 10) + 1
+if(rng == 7){
+  return mLvl = char.Level + (Math.floor(Math.random() * 5) + 1) *1.5
+}
   let mLvl = char.Level + (Math.floor(Math.random() * 5) + 1)
-  let def = asdasd
+  let def = something
+} else{
+  //once a boss is encountered will reset the mob encouter to 0  
+  mobBoss
+}
+
+}
+
+getRobbed(){
+  let itemList = char.inventory
+  let stolenItem = itemList[Math.floor(math.random() * itemList.length)]
+  return stolenItem
+}
+
+takeABreak(){
+  let maxHp = char.maxHp
+  let currentHp = char.currHp
+  let recoverHp = maxHp * .1
+  //insert redux equation in adding current hp and recoveredHp
+}
+
+//might make checking status also show inventory
+checkStatus(){
+  displayModal(charStats, charInventory)
+}
+
+readDataBook(){
+  displayModal(dataBook)
 }
 
 //Battle Screen
@@ -65,7 +100,7 @@ if within 3 levels will have a 10% chance to miss, if lower than 5 levels will n
 if higher than 5 level may have higher chances to miss
 equipment can make up for level difference 
 maybe give both jobs a skill that can only be activated randomly
--Feel Dice: level difference will affect chances of fleeing, chance of dropping gold on 
+-Flee Dice: level difference will affect chances of fleeing, chance of dropping gold on 
 successful feeling
 -Potions/Items: Potions will recover 10-25% of hp, potential chance of adding in other
 items to help will battling
@@ -88,6 +123,13 @@ dgeDice(){
   } else {
     "Hit"
   }
+}
+
+usePotion(){
+  let maxHp = char.maxHp
+  let currentHp = char.currHp
+  let recoverHp = maxHp * .1
+  //insert redux equation in adding current hp and recoveredHp
 }
 
 fleeDice(){

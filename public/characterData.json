@@ -1,6 +1,6 @@
 {
   "warrior": {
-    "class": "Warrior",
+    "job": "Warrior",
     "stats": {
       "level": 1,
       "str": 10,
@@ -12,8 +12,8 @@
     "description": "A retired adventurer who has to pick up his sword once again to avenge his family by defeating the demon lord.",
     "image": "warrior.png"
   },
-  "theif": {
-    "class": "Theif",
+  "rogue": {
+    "job": "Rogue",
     "stats": {
       "level": 1,
       "str": 5,
@@ -22,37 +22,7 @@
       "def": 5,
       "luk": 7
     },
-    "description": "A proud theif who likes a challenge, his next challenge acquiring the demon lord's treasure.",
-    "image": "theif.png"
-  },
-  "monster": {
-    "mobs": [
-      {
-        "name": "Slime",
-        "loot ": ["weapon", "armor", "potion", "slime balls"],
-        "stats": {
-          "level": 1,
-          "str": 4,
-          "agi": 4,
-          "hp": 50,
-          "def": 4,
-          "luk": 0,
-          "image": "slime.jpg"
-        }
-      },
-      {
-        "name": "Skeleton",
-        "loot ": ["weapon", "armor", "potion", "bones"],
-        "stats": {
-          "level": 1,
-          "str": 7,
-          "agi": 3,
-          "hp": 55,
-          "def": 6,
-          "luk": 0,
-          "image": "skeleton.jpg"
-        }
-      }
-    ]
+    "description": "A proud Rogue who likes a challenge, his next challenge acquiring the demon lord's treasure.",
+    "image": "Rogue.png"
   }
 }

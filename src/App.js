@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import $ from "jquery";
-import CharSelect from "./component/charSelect/charSelect";
-import WarriorStats from "./component/Warrior/warrior";
-import TheifStats from "./component/Theif/theif";
+import CharSelect from "./component/charSelect/CharSelect";
 
 class App extends Component {
   constructor(props) {
@@ -35,13 +33,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Class Selection</h1>
         <CharSelect
           warrior={this.state.charSheet.warrior}
-          theif={this.state.charSheet.theif}
+          rogue={this.state.charSheet.rogue}
         />
-        <WarriorStats />
-        <TheifStats />
+        <button onClick={() => console.log(this.state)}></button>
       </div>
     );
   }

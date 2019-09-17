@@ -1,7 +1,7 @@
 import React from "react";
-import "./theif.css";
+import "./Rogue.css";
 
-const TheifStats = props => (
+const RogueStats = props => (
   <table className="tg">
     <tbody>
       <tr>
@@ -39,4 +39,4 @@ const TheifStats = props => (
   </table>
 );
 
-export default TheifStats;
+export default RogueStats;
