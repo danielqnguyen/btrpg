@@ -2,11 +2,10 @@ import React from "react";
 import Modal from "../charSelect/Modal";
 
 const WarriorSelection = props => {
-  console.log("============", props);
   if (props.info) {
     return (
       <Modal
-        name="modal1"
+        id="modal1"
         info={props.info}
         show={props.show}
         handleClose={props.handleClose}
