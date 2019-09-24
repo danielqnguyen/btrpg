@@ -37,7 +37,7 @@ class App extends Component {
           warrior={this.state.charSheet.warrior}
           rogue={this.state.charSheet.rogue}
         />
-        <button onClick={() => console.log(this.state)}></button>
+        {/* <button onClick={() => console.log(this.state)}></button> */}
       </div>
     );
   }

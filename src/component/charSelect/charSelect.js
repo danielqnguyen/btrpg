@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./CharSelect.css";
-import Modal from "./Modal";
 import WarriorSelection from "../warrior/WarriorSelection";
 import RogueSelection from "../rogue/RogueSelection";
+import { connect } from "react-redux";
 
 class CharSelect extends Component {
   constructor(props) {
@@ -29,6 +29,10 @@ class CharSelect extends Component {
     this.setState({ show2: false });
   };
 
+  saveInfo = () => {
+    // this.props.getUserCharData(data goes here)
+  };
+
   render() {
     return (
       <div>
@@ -50,10 +54,27 @@ class CharSelect extends Component {
         <button type="button" onClick={this.showModal2}>
           Rogue
         </button>
-        <button onClick={() => console.log(this.state, this.props)}></button>
+        {/* <button onClick={() => console.log(this.state, this.props)}></button> */}
       </div>
     );
   }
 }
 
-export default CharSelect;
+const mapStateToProps = state => {
+  return {
+    charData: state.Reducer
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserCharData: charData => {
+      dispatch(getCharData(charData));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CharSelect);
