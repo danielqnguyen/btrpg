@@ -8,6 +8,7 @@ const RogueSelection = props => {
         id="modal2"
         info={props.info}
         show={props.show}
+        chooseJob={props.chooseJob}
         handleClose={props.handleClose}
       ></Modal>
     );

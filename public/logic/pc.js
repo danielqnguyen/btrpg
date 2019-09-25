@@ -12,7 +12,7 @@ Luk(rare) stat (currently) cannot be increased wihtout equipment, either increas
 or crit rate
 */
 //on confirmation click of job selection will store the class's information into redux
-//will add exp
+//exp gain: when gaining exp it will add to current exp and then after it will then look at current level and compare current level exp to accumlated exp and if it exceeds level will rise, if not nothing happens
 //maybe convert str/agi into a dmg stat 
 
 // Options Page

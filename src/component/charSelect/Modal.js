@@ -15,7 +15,11 @@ const Modal = props => {
         <h3>HP: {info.stats.hp}</h3>
         <h3>DEF: {info.stats.def}</h3>
         <h3>LUK: {info.stats.luk}</h3>
-        <button onClick={props.handleClose}> close </button>
+
+        <h4>Select this class?</h4>
+        <button onClick={props.chooseJob}> Yes </button>
+
+        <button onClick={props.handleClose}> No </button>
       </section>
     </div>
   );
