@@ -4,6 +4,7 @@ import WarriorSelection from "../warrior/WarriorSelection";
 import RogueSelection from "../rogue/RogueSelection";
 import { connect } from "react-redux";
 import { getCharData } from "../../redux/Action";
+import $ from "jquery";
 
 class CharSelect extends Component {
   constructor(props) {
@@ -11,8 +12,26 @@ class CharSelect extends Component {
     this.state = {
       show1: false,
       show2: false,
-      charStats: ""
+      charStats: "",
+      loading: true
     };
+  }
+
+  getCharData() {}
+
+  componentDidMount() {
+    $.ajax({
+      url: "/characterData.json",
+      dataType: "json",
+      cache: false,
+      success: function(data) {
+        console.log(data);
+        this.setState({ charSheet: data, loading: false });
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.log(err);
+      }
+    });
   }
 
   showModal1 = () => {
@@ -31,22 +50,23 @@ class CharSelect extends Component {
     this.setState({ show2: false });
   };
 
-  chooseJob = test => {
-    // this.setState({charStats: this.props.})
-    console.log(test);
-    this.props.getUserCharData(test);
+  chooseJob = jobStat => {
+    this.props.getUserCharData(jobStat);
+    // this.props.history.push("/explore");
   };
 
   render() {
+    if (this.state.loading) {
+      return "Loading...";
+    }
     return (
       <div>
         <h1>Class Selection</h1>
-
         <WarriorSelection
           handleClose={this.hideModal1}
           show={this.state.show1}
-          info={this.props.warrior}
-          chooseJob={() => this.chooseJob(this.props.warrior)}
+          info={this.state.charSheet.warrior}
+          chooseJob={() => this.chooseJob(this.state.charSheet.warrior)}
         ></WarriorSelection>
         <button type="button" onClick={this.showModal1}>
           Warrior
@@ -54,8 +74,8 @@ class CharSelect extends Component {
         <RogueSelection
           handleClose={this.hideModal2}
           show={this.state.show2}
-          info={this.props.rogue}
-          chooseJob={() => this.chooseJob(this.props.rogue)}
+          info={this.state.charSheet.rogue}
+          chooseJob={() => this.chooseJob(this.state.charSheet.rogue)}
         ></RogueSelection>
         <button type="button" onClick={this.showModal2}>
           Rogue
@@ -67,16 +87,12 @@ class CharSelect extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("====================");
-
   return {
     charData: state.Reducer
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  console.log("====================");
-
   return {
     getUserCharData: charData => {
       dispatch(getCharData(charData));

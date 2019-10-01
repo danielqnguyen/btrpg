@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import $ from "jquery";
 import CharSelect from "./component/charSelect/CharSelect";
+import Navigation from "./Navigation";
 
 class App extends Component {
   constructor(props) {
@@ -33,10 +34,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <CharSelect
+        <Navigation />
+        {/* <CharSelect
           warrior={this.state.charSheet.warrior}
           rogue={this.state.charSheet.rogue}
-        />
+        /> */}
         {/* <button onClick={() => console.log(this.state)}></button> */}
       </div>
     );
