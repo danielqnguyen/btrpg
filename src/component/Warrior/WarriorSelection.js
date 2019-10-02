@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../charSelect/Modal";
+import Modal from "../charSelect/CharSelectModal";
 
 const WarriorSelection = props => {
   if (props.info) {

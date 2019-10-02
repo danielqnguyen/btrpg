@@ -12,12 +12,10 @@ class CharSelect extends Component {
     this.state = {
       show1: false,
       show2: false,
-      charStats: "",
+      charSheet: "",
       loading: true
     };
   }
-
-  getCharData() {}
 
   componentDidMount() {
     $.ajax({
@@ -52,7 +50,8 @@ class CharSelect extends Component {
 
   chooseJob = jobStat => {
     this.props.getUserCharData(jobStat);
-    // this.props.history.push("/explore");
+
+    this.props.history.push("/options");
   };
 
   render() {
@@ -80,7 +79,7 @@ class CharSelect extends Component {
         <button type="button" onClick={this.showModal2}>
           Rogue
         </button>
-        <button onClick={() => console.log(this.props)}></button>
+        <button onClick={() => console.log(this.state)}></button>
       </div>
     );
   }
