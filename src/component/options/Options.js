@@ -8,19 +8,28 @@ class Options extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sModal: false
+      sModal: false,
+      mobCounter: 0,
+      loading: true,
+      char: {}
     };
   }
 
   componentDidMount() {
-    if (this.props.charData.charLvl === "") {
-      this.props.history.push("/");
-    }
+    let charData = sessionStorage.getItem("char");
+    let charJson = JSON.parse(charData);
+    charJson.stats.exp = 0;
+    this.setState({ char: charJson, loading: false });
+    console.log(charJson, this.state);
+    // if (this.state.char.stats.level === null) {
+    //   this.props.history.push("/");
+    // }
   }
 
   showStatus = () => {
     this.setState({ sModal: true });
-    console.log(this.props.charData);
+    // console.log(this.props.charData);
+    console.log(this.state);
   };
 
   closeModal = () => {
@@ -33,9 +42,7 @@ class Options extends Component {
     //   this.getRobbed();
     // } else if (rng == 9) {
     //   this.randomItem();
-    // } else if (rng == 8 || rng == 7) {
-    //   console.log("hi");
-    // } else if (rng == 6) {
+    // } else if (rng == 8) {
     //   this.merchantAppear();
     // } else {
     //   this.mobEncounter();
@@ -45,6 +52,11 @@ class Options extends Component {
   diceRoll = () => {
     let rng = Math.floor(Math.random() * 10) + 1;
     return rng;
+  };
+
+  mobCounter = () => {
+    if (!this.state.mobCounter === 10) {
+    }
   };
 
   render() {
@@ -57,8 +69,9 @@ class Options extends Component {
           Rest
         </button>
         <Status
+          loading={this.state.loading}
           show={this.state.sModal}
-          info={this.props.charData}
+          info={this.state.char}
           handleClose={this.closeModal}
         ></Status>
         <button type="button" className="sButton" onClick={this.showStatus}>

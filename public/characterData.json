@@ -8,9 +8,7 @@
       "hp": 50,
       "def": 7,
       "luk": 5
-    },
-    "description": "A retired adventurer who has to pick up his sword once again to avenge his family by defeating the demon lord.",
-    "image": "warrior.png"
+    }
   },
   "rogue": {
     "job": "Rogue",
@@ -21,8 +19,6 @@
       "hp": 50,
       "def": 5,
       "luk": 7
-    },
-    "description": "A proud Rogue who likes a challenge, his next challenge acquiring the demon lord's treasure.",
-    "image": "Rogue.png"
+    }
   }
 }

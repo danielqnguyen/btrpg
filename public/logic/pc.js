@@ -56,6 +56,7 @@ if(mobEncouter !== 10){
   let mSpecies = mobList[Math.floor(math.random() * mobList.length)]
   let rng = Math.floor(Math.random() * 10) + 1
 if(rng == 7){
+  //rare/elite mob
   return mLvl = char.Level + (Math.floor(Math.random() * 5) + 1) *1.5
 }
   let mLvl = char.Level + (Math.floor(Math.random() * 5) + 1)
