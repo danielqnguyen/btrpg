@@ -7,7 +7,6 @@ const Status = props => {
   const showHideClassname = props.show
     ? "modal display-block"
     : "modal display-none";
-  console.log(props.info);
   let info = props.info;
 
   return (

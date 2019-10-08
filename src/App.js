@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import $ from "jquery";
-import CharSelect from "./component/charSelect/CharSelect";
+// import CharSelect from "./component/charSelect/CharSelect";
 import Navigation from "./Navigation";
 
 class App extends Component {

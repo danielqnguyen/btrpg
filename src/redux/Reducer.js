@@ -7,7 +7,7 @@ const Reducer = (
   switch (action.type) {
     case "SAVE_CHAR_DATA":
       // console.log(action.payload.stats.level, "++++++++++++");
-      const charStats = action.payload;
+      // const charStats = action.payload;
       console.log(action);
       // state = {
       //   job: charStats.job,
