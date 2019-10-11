@@ -13,7 +13,8 @@ class Options extends Component {
       mobCounter: 0,
       loading: true,
       char: {},
-      mobData: {}
+      mobData: {},
+      wildMob: { name: "" }
     };
   }
 
@@ -68,42 +69,77 @@ class Options extends Component {
     let mobList = this.state.mobData;
     let mob = mobList[Math.floor(Math.random() * mobList.length)];
     console.log("ASDQWE", mob);
-
     if (this.state.mobCounter === 10) {
       console.log("Boss Stage");
-      mob.stats.level = Math.round(
-        this.state.char.stats.level + (Math.floor(Math.random() * 5) + 1) * 2
-      );
-      this.mobStats("boss", mob.stats.level, mob.name);
+      mob.stats.level =
+        this.state.char.stats.level + (Math.floor(Math.random() * 5) + 1);
+      this.mobStats("boss", mob.stats.level, mob.name, mob);
       this.setState({ mobCounter: 0 });
     } else {
       let rng = Math.floor(Math.random() * 10) + 1;
       console.log("MOB APPEARS");
       if (rng === this.diceRoll()) {
         mob.stats.level = Math.round(
-          this.state.char.stats.level +
-            (Math.floor(Math.random() * 5) + 1) * 1.5
+          this.state.char.stats.level + Math.floor(Math.random() * 3)
         );
-        this.mobStats("elite", mob.stats.level, mob.name);
+        this.mobStats("elite", mob.stats.level, mob.name, mob);
         console.log(mob, "======elite======");
       } else {
-        mob.stats.level =
-          this.state.char.stats.level + (Math.floor(Math.random() * 5) + 1);
-        this.mobStats("common", mob.stats.level, mob.name);
+        mob.stats.level = this.state.char.stats.level;
+        this.mobStats("common", mob.stats.level, mob.name, mob);
         this.setState({ mobCounter: this.state.mobCounter + 1 });
         console.log(mob, "=====COMMOn=======");
       }
     }
   };
 
-  mobStats = (rarity, level, name) => {
+  mobStats = (rarity, level, name, mob) => {
+    //might need to fix hp mulitplcation rate
+    let stats = mob.stats;
     if (rarity === "common") {
       console.log("common mob stats");
-      console.log(name);
+      console.log(mob, level);
+      this.setState({
+        wildMob: {
+          name,
+          level,
+          rarity,
+          str: stats.str * level,
+          agi: stats.agi * level,
+          hp: stats.hp * level,
+          def: stats.def * level,
+          loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
+        }
+      });
     } else if (rarity === "elite") {
       console.log("elite mob stats");
+      console.log(name, level);
+      this.setState({
+        wildMob: {
+          name,
+          level,
+          rarity,
+          str: Math.round(stats.str * (level * 1.2)),
+          agi: Math.round(stats.agi * (level * 1.2)),
+          hp: Math.round(stats.hp * (level * 1.2)),
+          def: Math.round(stats.def * (level * 1.2)),
+          loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
+        }
+      });
     } else if (rarity === "boss") {
       console.log("boss mob stats");
+      this.setState({
+        wildMob: {
+          name,
+          level,
+          rarity,
+          str: Math.round(stats.str * (level * 1.5)),
+          agi: Math.round(stats.agi * (level * 1.5)),
+          hp: Math.round(stats.hp * (level * 1.5)),
+          def: Math.round(stats.def * (level * 1.5)),
+          loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
+        }
+      });
     }
   };
 
