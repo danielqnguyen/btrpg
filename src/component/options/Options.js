@@ -22,6 +22,8 @@ class Options extends Component {
     let charData = sessionStorage.getItem("char");
     let charJson = JSON.parse(charData);
     charJson.stats.exp = 0;
+    charJson.inventory = ["potion", "weapon", "armor"];
+    charJson.gold = 0;
     this.setState({ char: charJson, loading: false });
     console.log(charJson, this.state);
 
@@ -46,17 +48,19 @@ class Options extends Component {
   };
 
   explore = () => {
-    let rng = this.diceRoll();
-    console.log(rng);
-    // if (rng == 10) {
-    //   this.getRobbed();
-    // } else if (rng == 9) {
-    //   this.randomItem();
-    // } else if (rng == 8) {
-    //   this.merchantAppear();
-    // } else {
-    this.mobEncounter();
-    // }
+    // let rng = this.diceRoll();
+    let rng = 9;
+    console.log("============", rng);
+    if (rng === 10) {
+      this.getRobbed();
+    } else if (rng === 9) {
+      this.randomItem();
+      // } else if (rng === 8) {
+      //   this.merchantAppear();
+    } else {
+      this.mobEncounter();
+      // }
+    }
   };
 
   diceRoll = () => {
@@ -141,6 +145,22 @@ class Options extends Component {
         }
       });
     }
+  };
+
+  getRobbed = () => {
+    if (this.state.char.inventory.length >= 1) {
+      let inventory = this.state.char.inventory;
+      inventory.splice(Math.floor(Math.random() * inventory.length), 1);
+    } else {
+      console.log("nothing to steal you poor guy");
+    }
+  };
+
+  randomItem = () => {
+    let randomItem = ["weapon", "potion", "armor"];
+    this.state.char.inventory.push(
+      randomItem[Math.floor(Math.random() * randomItem.length)]
+    );
   };
 
   render() {
