@@ -4,6 +4,7 @@ import { getCharData } from "../../redux/Action";
 import { connect } from "react-redux";
 import Status from "./Status";
 import $ from "jquery";
+import Explore from "./Explore";
 
 class Options extends Component {
   constructor(props) {
@@ -14,7 +15,9 @@ class Options extends Component {
       loading: true,
       char: {},
       mobData: {},
-      wildMob: { name: "" }
+      wildMob: { name: "" },
+      explore: "",
+      eModal: false
     };
   }
 
@@ -37,27 +40,40 @@ class Options extends Component {
     });
   }
 
-  showStatus = () => {
-    this.setState({ sModal: true });
-    // console.log(this.props.charData);
-    console.log(this.state);
+  openModal = action => {
+    if (action === "status") {
+      this.setState({ sModal: true });
+    } else if (action === "explore") {
+      this.setState({ eModal: true });
+    }
   };
 
-  closeModal = () => {
-    this.setState({ sModal: false });
+  closeModal = action => {
+    if (action === "status") {
+      this.setState({ sModal: false });
+    } else if (action === "explore") {
+      this.setState({ eModal: false });
+    }
   };
 
   explore = () => {
-    // let rng = this.diceRoll();
-    let rng = 9;
+    let rng = this.diceRoll();
     console.log("============", rng);
     if (rng === 10) {
+      this.setState({ explore: "gettingRobbed" });
+      console.log("getting robbed ):");
       this.getRobbed();
     } else if (rng === 9) {
+      this.setState({ explore: "randomItem" });
+      console.log("Free item!");
       this.randomItem();
-      // } else if (rng === 8) {
-      //   this.merchantAppear();
+    } else if (rng === 8) {
+      this.setState({ explore: "merchant" });
+      console.log("why hello there");
+      // this.merchantAppear();
     } else {
+      this.setState({ explore: "wildMob" });
+      console.log("grind time");
       this.mobEncounter();
       // }
     }
@@ -74,25 +90,21 @@ class Options extends Component {
     let mob = mobList[Math.floor(Math.random() * mobList.length)];
     console.log("ASDQWE", mob);
     if (this.state.mobCounter === 10) {
-      console.log("Boss Stage");
       mob.stats.level =
         this.state.char.stats.level + (Math.floor(Math.random() * 5) + 1);
       this.mobStats("boss", mob.stats.level, mob.name, mob);
       this.setState({ mobCounter: 0 });
     } else {
       let rng = Math.floor(Math.random() * 10) + 1;
-      console.log("MOB APPEARS");
       if (rng === this.diceRoll()) {
         mob.stats.level = Math.round(
           this.state.char.stats.level + Math.floor(Math.random() * 3)
         );
         this.mobStats("elite", mob.stats.level, mob.name, mob);
-        console.log(mob, "======elite======");
       } else {
         mob.stats.level = this.state.char.stats.level;
         this.mobStats("common", mob.stats.level, mob.name, mob);
         this.setState({ mobCounter: this.state.mobCounter + 1 });
-        console.log(mob, "=====COMMOn=======");
       }
     }
   };
@@ -101,8 +113,6 @@ class Options extends Component {
     //might need to fix hp mulitplcation rate
     let stats = mob.stats;
     if (rarity === "common") {
-      console.log("common mob stats");
-      console.log(mob, level);
       this.setState({
         wildMob: {
           name,
@@ -116,8 +126,6 @@ class Options extends Component {
         }
       });
     } else if (rarity === "elite") {
-      console.log("elite mob stats");
-      console.log(name, level);
       this.setState({
         wildMob: {
           name,
@@ -131,7 +139,6 @@ class Options extends Component {
         }
       });
     } else if (rarity === "boss") {
-      console.log("boss mob stats");
       this.setState({
         wildMob: {
           name,
@@ -166,6 +173,12 @@ class Options extends Component {
   render() {
     return (
       <>
+        <Explore
+          loading={this.state.loading}
+          show={this.state.eModal}
+          explore={this.state.explore}
+          handleClose={() => this.closeModal("explore")}
+        ></Explore>
         <button type="button" className="eButton" onClick={this.explore}>
           Explore
         </button>
@@ -176,9 +189,13 @@ class Options extends Component {
           loading={this.state.loading}
           show={this.state.sModal}
           info={this.state.char}
-          handleClose={this.closeModal}
+          handleClose={() => this.closeModal("status")}
         ></Status>
-        <button type="button" className="sButton" onClick={this.showStatus}>
+        <button
+          type="button"
+          className="sButton"
+          onClick={() => this.openModal("status")}
+        >
           Status
         </button>
         <button type="button" className="iButton">
