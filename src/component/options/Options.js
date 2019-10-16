@@ -43,8 +43,8 @@ class Options extends Component {
   openModal = action => {
     if (action === "status") {
       this.setState({ sModal: true });
-    } else if (action === "explore") {
-      this.setState({ eModal: true });
+      // } else if (action === "explore") {
+      //   this.setState({ eModal: true });
     }
   };
 
@@ -77,6 +77,7 @@ class Options extends Component {
       this.mobEncounter();
       // }
     }
+    this.setState({ eModal: true });
   };
 
   diceRoll = () => {
@@ -121,6 +122,7 @@ class Options extends Component {
           str: stats.str * level,
           agi: stats.agi * level,
           hp: stats.hp * level,
+          cHp: stats.hp * level,
           def: stats.def * level,
           loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
         }
@@ -134,6 +136,7 @@ class Options extends Component {
           str: Math.round(stats.str * (level * 1.2)),
           agi: Math.round(stats.agi * (level * 1.2)),
           hp: Math.round(stats.hp * (level * 1.2)),
+          cHp: Math.round(stats.hp * (level * 1.2)),
           def: Math.round(stats.def * (level * 1.2)),
           loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
         }
@@ -147,6 +150,7 @@ class Options extends Component {
           str: Math.round(stats.str * (level * 1.5)),
           agi: Math.round(stats.agi * (level * 1.5)),
           hp: Math.round(stats.hp * (level * 1.5)),
+          cHp: Math.round(stats.hp * (level * 1.5)),
           def: Math.round(stats.def * (level * 1.5)),
           loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
         }
@@ -177,6 +181,7 @@ class Options extends Component {
           loading={this.state.loading}
           show={this.state.eModal}
           explore={this.state.explore}
+          wildMob={this.state.wildMob}
           handleClose={() => this.closeModal("explore")}
         ></Explore>
         <button type="button" className="eButton" onClick={this.explore}>

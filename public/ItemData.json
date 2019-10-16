@@ -1,0 +1,22 @@
+{
+  "items": {
+    "loot": [
+      {
+        "name": "weapon",
+        "stats": {
+          "level": 1,
+          "str": 3,
+          "agi": 3
+        }
+      },
+      {
+        "name": "armor",
+        "stats": {
+          "level": 1,
+          "hp": 50,
+          "def": 4
+        }
+      }
+    ]
+  }
+}
