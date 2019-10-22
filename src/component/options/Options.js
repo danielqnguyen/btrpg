@@ -161,14 +161,27 @@ class Options extends Component {
   fight = () => {
     let aDmg = this.attackDmgCalc();
     let attack = aDmg - this.state.wildMob.def;
-    let dmgGive = (this.state.wildMob.chp = attack);
-    if (this.state.wildMob.cHp <= 0 || dmgGive >= this.state.wildMob.cHp) {
+    let dmgGiven = this.state.wildMob.cHp - attack;
+    console.log(attack);
+    if (this.state.wildMob.cHp <= 0 || attack >= this.state.wildMob.cHp) {
       this.setState({ wildMob: [], explore: "endScreen" });
     }
     this.setState(prevState => {
       let wildMob = { ...prevState.wildMob };
-      wildMob.cHp = this.state.wildMob.cHp - dmgGive;
+      wildMob.cHp = dmgGiven;
       return { wildMob };
+    });
+    let eDmg = this.enemyAttDmgCalc();
+    let eAttack = eDmg - this.state.char.stats.def;
+    let dmgTaken = this.state.char.stats.hp - eAttack;
+    if (this.state.char.stats.hp <= 0 || eAttack >= this.state.char.stats.hp) {
+      this.setState({ explore: "endScreen" });
+    }
+    this.setState(prevState => {
+      let char = { ...prevState.char };
+      char.stats.hp = dmgTaken;
+      console.log(char);
+      return { char };
     });
   };
 
@@ -178,6 +191,10 @@ class Options extends Component {
     } else {
       return this.state.char.stats.agi + this.state.char.stats.str / 2;
     }
+  };
+
+  enemyAttDmgCalc = () => {
+    return this.state.wildMob.str + this.state.wildMob.agi;
   };
 
   getRobbed = () => {
