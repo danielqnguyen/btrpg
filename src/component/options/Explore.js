@@ -20,7 +20,7 @@ const Explore = props => {
           <h3>
             HP:{props.wildMob.cHp}/{props.wildMob.hp}
           </h3>
-          <button onClick={props.handleClose}> Fight </button>
+          <button onClick={props.fight}> Fight </button>
           <button onClick={props.handleClose}> Run </button>
         </section>
       </div>
@@ -48,6 +48,15 @@ const Explore = props => {
       <div className={showHideClassname} id={props.modalId}>
         <section className="modal-main">
           <h1>POG</h1>
+          <button onClick={props.handleClose}> close </button>
+        </section>
+      </div>
+    );
+  } else if (props.explore === "endScreen") {
+    return (
+      <div className={showHideClassname} id={props.modalId}>
+        <section className="modal-main">
+          <h1>WINNER WINNER CHICKEN DINNER</h1>
           <button onClick={props.handleClose}> close </button>
         </section>
       </div>

@@ -158,6 +158,28 @@ class Options extends Component {
     }
   };
 
+  fight = () => {
+    let aDmg = this.attackDmgCalc();
+    let attack = aDmg - this.state.wildMob.def;
+    let dmgGive = (this.state.wildMob.chp = attack);
+    if (this.state.wildMob.cHp <= 0 || dmgGive >= this.state.wildMob.cHp) {
+      this.setState({ wildMob: [], explore: "endScreen" });
+    }
+    this.setState(prevState => {
+      let wildMob = { ...prevState.wildMob };
+      wildMob.cHp = this.state.wildMob.cHp - dmgGive;
+      return { wildMob };
+    });
+  };
+
+  attackDmgCalc = () => {
+    if (this.state.char.job === "Warrior") {
+      return this.state.char.stats.str + this.state.char.stats.agi / 2;
+    } else {
+      return this.state.char.stats.agi + this.state.char.stats.str / 2;
+    }
+  };
+
   getRobbed = () => {
     if (this.state.char.inventory.length >= 1) {
       let inventory = this.state.char.inventory;
@@ -182,6 +204,7 @@ class Options extends Component {
           show={this.state.eModal}
           explore={this.state.explore}
           wildMob={this.state.wildMob}
+          fight={this.fight}
           handleClose={() => this.closeModal("explore")}
         ></Explore>
         <button type="button" className="eButton" onClick={this.explore}>
