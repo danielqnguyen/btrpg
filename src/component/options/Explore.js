@@ -61,6 +61,15 @@ const Explore = props => {
         </section>
       </div>
     );
+  } else if (props.explore === "endScreen2") {
+    return (
+      <div className={showHideClassname} id={props.modalId}>
+        <section className="modal-main">
+          <h1>You died!</h1>
+          <button onClick={props.handleClose}> close </button>
+        </section>
+      </div>
+    );
   }
 };
 
