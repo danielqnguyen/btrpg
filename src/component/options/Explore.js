@@ -21,6 +21,7 @@ const Explore = props => {
             HP:{props.wildMob.cHp}/{props.wildMob.hp}
           </h3>
           <button onClick={props.fight}> Fight </button>
+          <button onClick={props.potion}>Potion</button>
           <button onClick={props.handleClose}> Run </button>
         </section>
       </div>
@@ -56,7 +57,10 @@ const Explore = props => {
     return (
       <div className={showHideClassname} id={props.modalId}>
         <section className="modal-main">
-          <h1>WINNER WINNER CHICKEN DINNER</h1>
+          <h1>Battle Won!</h1>
+          <h3>EXP obtained: </h3>
+          <h3>Items obtained:</h3>
+          <h3>Gold obtained:</h3>
           <button onClick={props.handleClose}> close </button>
         </section>
       </div>

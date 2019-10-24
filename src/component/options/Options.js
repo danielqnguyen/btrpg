@@ -24,10 +24,10 @@ class Options extends Component {
   componentDidMount() {
     let charData = sessionStorage.getItem("char");
     let charJson = JSON.parse(charData);
-    charJson.stats.exp = 0;
+    charJson.exp = 0;
     charJson.inventory = ["potion", "weapon", "armor"];
     charJson.gold = 0;
-    charJson.stats.maxHp = charJson.stats.hp;
+    charJson.maxHp = charJson.hp;
     this.setState({ char: charJson, loading: false });
     console.log(charJson, this.state);
 
@@ -87,26 +87,24 @@ class Options extends Component {
   };
 
   mobEncounter = () => {
-    console.log(this.state.mobCounter);
     let mobList = this.state.mobData;
     let mob = mobList[Math.floor(Math.random() * mobList.length)];
-    console.log("ASDQWE", mob);
     if (this.state.mobCounter === 10) {
       mob.stats.level =
-        this.state.char.stats.level + (Math.floor(Math.random() * 5) + 1);
+        this.state.char.level + (Math.floor(Math.random() * 5) + 1);
       this.mobStats("boss", mob.stats.level, mob.name, mob);
       this.setState({ mobCounter: 0 });
     } else {
+      this.setState({ mobCounter: this.state.mobCounter + 1 });
       let rng = Math.floor(Math.random() * 10) + 1;
       if (rng === this.diceRoll()) {
         mob.stats.level = Math.round(
-          this.state.char.stats.level + Math.floor(Math.random() * 3)
+          this.state.char.level + Math.floor(Math.random() * 3)
         );
         this.mobStats("elite", mob.stats.level, mob.name, mob);
       } else {
-        mob.stats.level = this.state.char.stats.level;
+        mob.stats.level = this.state.char.level;
         this.mobStats("common", mob.stats.level, mob.name, mob);
-        this.setState({ mobCounter: this.state.mobCounter + 1 });
       }
     }
   };
@@ -125,6 +123,8 @@ class Options extends Component {
           hp: stats.hp * level,
           cHp: stats.hp * level,
           def: stats.def * level,
+          gold: Math.round(Math.random() * 5),
+          exp: level * 5,
           loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
         }
       });
@@ -139,6 +139,8 @@ class Options extends Component {
           hp: Math.round(stats.hp * (level * 1.2)),
           cHp: Math.round(stats.hp * (level * 1.2)),
           def: Math.round(stats.def * (level * 1.2)),
+          gold: Math.round(Math.random() * 10),
+          exp: level * 10,
           loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
         }
       });
@@ -153,6 +155,8 @@ class Options extends Component {
           hp: Math.round(stats.hp * (level * 1.5)),
           cHp: Math.round(stats.hp * (level * 1.5)),
           def: Math.round(stats.def * (level * 1.5)),
+          gold: Math.round(Math.random() * 20),
+          exp: level * 20,
           loot: [mob.loot[Math.floor(Math.random() * 2)], mob.loot[3]]
         }
       });
@@ -160,33 +164,30 @@ class Options extends Component {
   };
 
   fight = () => {
-    console.log(this.state.char.stats.hp);
-
     let aDmg = this.attackDmgCalc();
     let attack = aDmg - this.state.wildMob.def;
     let dmgGiven = this.state.wildMob.cHp - attack;
-    console.log(attack);
     this.setState(prevState => {
       let wildMob = { ...prevState.wildMob };
       wildMob.cHp = dmgGiven;
       return { wildMob };
     });
     if (this.state.wildMob.cHp <= 0 || attack >= this.state.wildMob.cHp) {
+      this.battleWon(this.state.wildMob.exp);
       this.setState({ wildMob: [], explore: "endScreen" });
     }
     let eDmg = this.enemyAttDmgCalc();
-    let eAttack = eDmg - this.state.char.stats.def;
-    let dmgTaken = this.state.char.stats.hp - eAttack;
+    let eAttack = eDmg - this.state.char.def;
+    let dmgTaken = this.state.char.hp - eAttack;
     this.setState(prevState => {
       let char = { ...prevState.char };
-      char.stats.hp = dmgTaken;
-      console.log(char);
+      char.hp = dmgTaken;
       return { char };
     });
-    if (this.state.char.stats.hp <= 0 || eAttack >= this.state.char.stats.hp) {
+    if (this.state.char.hp <= 0 || eAttack >= this.state.char.hp) {
       this.setState(prevState => {
         let char = { ...prevState.char };
-        char.stats.hp = this.state.char.stats.maxHp;
+        char.hp = this.state.char.maxHp;
         return { char };
       });
       this.setState({ explore: "endScreen2" });
@@ -195,14 +196,50 @@ class Options extends Component {
 
   attackDmgCalc = () => {
     if (this.state.char.job === "Warrior") {
-      return this.state.char.stats.str + this.state.char.stats.agi / 2;
+      return this.state.char.str + this.state.char.agi / 2;
     } else {
-      return this.state.char.stats.agi + this.state.char.stats.str / 2;
+      return this.state.char.agi + this.state.char.str / 2;
     }
   };
 
   enemyAttDmgCalc = () => {
     return this.state.wildMob.str + this.state.wildMob.agi;
+  };
+
+  battleWon = obtainedExp => {
+    console.log("-ff7 victory music-");
+    let currentExp = this.state.char.exp;
+    let newExp = Object.assign({}, this.state.char);
+    newExp.exp = currentExp + obtainedExp;
+    console.log(newExp);
+    if (newExp.exp === this.state.char.level * 10) {
+      this.levelUp();
+    } else {
+      this.setState({ char: newExp });
+      console.log("exp gained");
+    }
+  };
+
+  levelUp = () => {
+    console.log("levelup");
+    let currentStats = this.state.char;
+    let levelUp = Object.assign({}, this.state.char);
+    levelUp.level = currentStats.level + 1;
+    levelUp.str = currentStats.str + 10;
+    levelUp.agi = currentStats.agi + 5;
+    levelUp.def = currentStats.def + 2;
+    levelUp.maxHp = currentStats.maxHp + Math.round(currentStats.maxHp / 2);
+    this.setState({ char: levelUp });
+    setTimeout(() => {
+      this.healHp();
+    }, 1000);
+  };
+
+  healHp = () => {
+    let healHp = Object.assign({}, this.state.char);
+    healHp.hp = this.state.char.maxHp;
+    console.log(healHp);
+    this.setState({ char: healHp });
   };
 
   getRobbed = () => {
@@ -235,7 +272,7 @@ class Options extends Component {
         <button type="button" className="eButton" onClick={this.explore}>
           Explore
         </button>
-        <button type="button" className="rButton">
+        <button type="button" className="rButton" onClick={this.healHp}>
           Rest
         </button>
         <Status

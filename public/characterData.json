@@ -1,24 +1,20 @@
 {
   "warrior": {
     "job": "Warrior",
-    "stats": {
-      "level": 1,
-      "str": 10,
-      "agi": 5,
-      "hp": 50,
-      "def": 7,
-      "luk": 5
-    }
+    "level": 1,
+    "str": 10,
+    "agi": 5,
+    "hp": 50,
+    "def": 7,
+    "luk": 5
   },
   "rogue": {
     "job": "Rogue",
-    "stats": {
-      "level": 1,
-      "str": 5,
-      "agi": 10,
-      "hp": 50,
-      "def": 5,
-      "luk": 7
-    }
+    "level": 1,
+    "str": 5,
+    "agi": 10,
+    "hp": 50,
+    "def": 5,
+    "luk": 7
   }
 }
